@@ -95,7 +95,7 @@ def create_item(payload: ItemCreate, session: Session = Depends(get_session)):
 
     item = Item(
         id=str(uuid4()),
-        position=get_next_position(session),
+        position=get_next(session),
         title=payload.title,
         source=payload.source.model_dump(),
         publishedAt=payload.publishedAt,
