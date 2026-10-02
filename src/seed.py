@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from uuid import uuid4
 
 from sqlmodel import Session, select
 
@@ -20,8 +21,12 @@ def load_seed_data(session: Session):
     with open(SEED_FILE, "r", encoding="utf-8") as file:
         data = json.load(file)
 
-    for item_data in data["items"]:
-        item = Item(**item_data)
+    for position, item_data in enumerate(data["items"]):
+        item = Item(
+            id=str(uuid4()),
+            position=position,
+            **item_data,
+        )
         session.add(item)
 
     session.commit()
